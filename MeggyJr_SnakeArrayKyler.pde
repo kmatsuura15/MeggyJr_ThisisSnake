@@ -6,6 +6,7 @@ int marker = 4;
 int xapple = random(8);
 int yapple = random(8);
 boolean gotApple = false;
+boolean alive = false;
 
 struct Point{
   int x;    //x-coordinate of this point.
@@ -70,29 +71,47 @@ void loop()
     if (snakeArray[0].x < 0){    //If the xcoord is less than 0, loop it to the right.
       snakeArray[0].x = 7;  
     }
+   
 }
+
+
 
 void spawnApple()
 {
   DrawPx(xapple, yapple, Green);
-  if (snakeArray[0].x == xapple && snakeArray[0].y == yapple){
-    gotApple = true;
+    if (snakeArray[0].x == xapple && snakeArray[0].y == yapple){
+      gotApple = true;
   }
   
-  if(gotApple){
-    xapple = random(8);
-    yapple = random(8);
-    gotApple = false;
+    if(gotApple){
+      xapple = random(8);
+      yapple = random(8);
+      gotApple = false;
+      marker++;
   }
     
 }
 
+
+
 void drawSnake()
 {
-  for (int i = 0; i < marker; i++){
-    DrawPx(snakeArray[i].x, snakeArray[i].y, 2);
+  DrawPx(snakeArray[0].x, snakeArray[0].y, Blue);
+  for (int i = 1; i < marker; i++){
+    DrawPx(snakeArray[i].x, snakeArray[i].y, 1);
+    if (snakeArray[0].x == snakeArray[i].x && snakeArray[0].y == snakeArray[i].y){
+      alive = true;
+    }
+    
+    if(alive){
+      ClearSlate();
+      DisplaySlate();
+      delay(2000);
+      marker = 4;
+      alive = false;
+    } 
   }
-} 
+}
 
 void updateSnake()
 {
