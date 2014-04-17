@@ -7,6 +7,7 @@ int xapple = random(8);
 int yapple = random(8);
 boolean gotApple = false;
 boolean alive = false;
+int LEDs = 1;
 
 struct Point{
   int x;    //x-coordinate of this point.
@@ -86,6 +87,8 @@ void spawnApple()
     if(gotApple){
       xapple = random(8);
       yapple = random(8);
+      SetAuxLEDs(2*LEDs);
+      LEDs = 2*LEDs;
       gotApple = false;
       marker++;
   }
@@ -108,6 +111,7 @@ void drawSnake()
       DisplaySlate();
       delay(2000);
       marker = 4;
+      SetAuxLEDs(0); 
       alive = false;
     } 
   }
