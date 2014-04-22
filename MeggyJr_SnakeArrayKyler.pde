@@ -1,11 +1,11 @@
 #include <MeggyJrSimple.h>
 
-int direction = 270;
+int direction = 270;    //initial direction
 
-int marker = 4;
-int xapple = random(8);
-int yapple = random(8);
-boolean gotApple = false;
+int marker = 4;    //initial length (4 pixels)
+int xapple = random(8);    //Spawns the apple at a random x-coord
+int yapple = random(8);    //Spawns the apple at a random y-coord
+boolean gotApple = false;    
 boolean alive = false;
 int LEDs = 1;
 
@@ -14,7 +14,7 @@ struct Point{
   int y;    //y-coordinate of this point.
 };
 
-Point s1 = {3,4};
+Point s1 = {3,4};    //original points of the snake
 Point s2 = {4,4};
 Point s3 = {5,4};
 Point s4 = {6,4};
@@ -28,12 +28,12 @@ void setup()
 
 void loop()
 {
-  drawSnake();
-  spawnApple();
+  drawSnake();    //Draws Snake
+  spawnApple();    //Spawns apple    
   DisplaySlate();
   delay(200);
   ClearSlate();
-  updateSnake();
+  updateSnake();    //Updates the snake after it moves.
   CheckButtonsDown();
     if (Button_Up){    //Button_Up is equal to direction 0 
       direction = 0;
@@ -77,20 +77,20 @@ void loop()
 
 
 
-void spawnApple()
+void spawnApple()    //code to spawn apple
 {
-  DrawPx(xapple, yapple, Green);
+  DrawPx(xapple, yapple, Green);    //This recognizes if the snake eat the apple.
     if (snakeArray[0].x == xapple && snakeArray[0].y == yapple){
       gotApple = true;
   }
   
-    if(gotApple){
+    if(gotApple){    //After the apple is eaten, it spawns at a new, random point.  
       xapple = random(8);
       yapple = random(8);
       SetAuxLEDs(2*LEDs);
       LEDs = 2*LEDs;
       gotApple = false;
-      marker++;
+      marker++;    //increases length after an apple is eaten.
   }
     
 }
@@ -101,9 +101,9 @@ void drawSnake()
 {
   DrawPx(snakeArray[0].x, snakeArray[0].y, Blue);
   for (int i = 1; i < marker; i++){
-    DrawPx(snakeArray[i].x, snakeArray[i].y, 1);
+    DrawPx(snakeArray[i].x, snakeArray[i].y, 1);    //collision detection code
     if (snakeArray[0].x == snakeArray[i].x && snakeArray[0].y == snakeArray[i].y){
-      alive = true;
+      alive = true;    
     }
     
     if(alive){
@@ -117,7 +117,7 @@ void drawSnake()
   }
 }
 
-void updateSnake()
+void updateSnake()    //updates the snake.
 {
   for (int i = marker-1; i > 0; i--){
     snakeArray[i].x =  snakeArray[i-1].x;
